@@ -1,0 +1,22 @@
+body {
+    background-color: #02076C;
+    color: white;
+}
+
+.fondo {
+    background-color: #02076C;
+}
+
+.fondoBarras {
+    background-color: #061B91;
+    color: #6CE2EE;
+    height: 100px;
+}
+
+.activo {
+    color: #6CE2EE;
+}
+
+.noActivo {
+    color: #5F8E93;
+}

@@ -1,3 +1,108 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+  path: /
+  controller: App\Controller\AppController::index
+
+contacto:
+  path: /contacto
+  controller: App\Controller\AppController::contacto
+
+# Manejo de Discusiones
+
+foro:
+  path: /discusiones
+  controller: App\Controller\DiscusionController::foro
+
+discusion:
+  path: /discusiones/{id}
+  controller: App\Controller\DiscusionController::discusion
+  requirements:
+        id: '\d+'
+
+nuevaDiscusion:
+  path: /discusiones/nueva
+  controller: App\Controller\DiscusionController::nuevaDiscusion
+
+editarDiscusion:
+  path: /discusiones/editar/{id}
+  controller: App\Controller\DiscusionController::editarDiscusion
+  requirements:
+        id: '\d+'
+
+eliminarDiscusion:
+  path: /discusiones/eliminar/{id}
+  controller: App\Controller\DiscusionController::eliminarDiscusion
+  requirements:
+        id: '\d+'
+
+# Manejo de Noticias
+
+noticias:
+  path: /noticias
+  controller: App\Controller\NoticiaController::noticias
+
+noticia:
+  path: /noticias/{id}
+  controller: App\Controller\NoticiaController::noticia
+  requirements:
+        id: '\d+'
+
+nuevaNoticia:
+  path: /noticias/nueva
+  controller: App\Controller\NoticiaController::nuevaNoticia
+
+editarNoticia:
+  path: /noticias/editar/{id}
+  controller: App\Controller\NoticiaController::editarNoticia
+  requirements:
+        id: '\d+'
+
+eliminarNoticia:
+  path: /noticias/eliminar/{id}
+  controller: App\Controller\NoticiaController::eliminarNoticia
+  requirements:
+        id: '\d+'
+
+# Manejo de Usuarios
+
+usuarios:
+  path: /usuarios
+  controller: App\Controller\UsuarioController::usuarios
+
+perfil:
+  path: /usuarios/{id}
+  controller: App\Controller\UsuarioController::perfil
+  requirements:
+        id: '\d+'
+
+registro:
+  path: /usuarios/registro
+  controller: App\Controller\UsuarioController::registro
+
+editarUsuario:
+  path: /usuarios/editar/{id}
+  controller: App\Controller\UsuarioController::editarUsuario
+  requirements:
+        id: '\d+'
+
+eliminarUsuario:
+  path: /usuarios/eliminar/{id}
+  controller: App\Controller\UsuarioController::eliminarUsuario
+  requirements:
+        id: '\d+'
+
+# Manejo de Comentarios
+
+editarComentario:
+  path: /comentarios/editar/{id}/{idDiscusion}
+  controller: App\Controller\ComentarioController::editarComentario
+  requirements:
+        id: '\d+'
+        idDiscusion: '\d+'
+
+eliminarComentario:
+  path: /comentarios/eliminar/{id}/{idDiscusion}
+  controller: App\Controller\ComentarioController::eliminarComentario
+  requirements:
+        id: '\d+'
+        idDiscusion: '\d+'
+

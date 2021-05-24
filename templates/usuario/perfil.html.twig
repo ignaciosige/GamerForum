@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %}
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-12 col-md-2">
+            <img width="100px" height="300px" src="images/{% if usuario.fotoPerfil %}{{usuario.fotoPerfil}}{% else %}defecto.jpg{% endif %}" alt="">
+        </div>
+        <div class="col-12 col-md-6"></div>
+        <div class="col-12 col-md-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-2">
+            <h5>{{usuario.nombreUsuario}}</h5>
+        </div>
+        <div class="col-12 col-md-6"></div>
+        <div class="col-12 col-md-4">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

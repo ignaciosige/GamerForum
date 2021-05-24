@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container mt-2">
+    <div class="alert alert-danger d-none" role="alert" id="alertMensajeError">
+        La fecha no puede ser superior a la actual
+    </div>
+    {{ form_start(form, {'attr':{'id':'formUsuario'}}) }}
+        <div class="form-group">
+            {{form_row(form.nombreUsuario) }}
+        </div>
+        <div class="form-group">
+            {{form_row(form.email) }}
+        </div>
+        <div class="form-group">
+            {{form_row(form.fechaNacimiento) }}
+        </div>
+        <div class="form-group">
+            {{form_row(form.password) }}
+        </div>
+        {{form_row(form.save) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script src="{{asset('js/validacionRegistro.js')}}"></script>
+{% endblock %}

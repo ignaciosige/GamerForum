@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %}
+<div class="container mt-2">
+    <a href="{{ path('nuevaDiscusion') }}">+ Crear nueva discusión</a>
+    <ul class="list-group-flush">
+        {% for discusion in discusiones %}
+        <li class="list-group-item border-top border-bottom"><a href="{{ path('discusion', {id: discusion.id}) }}">{{discusion.titulo}}</a> - creado por: {{discusion.creador.nombreUsuario}}</li>
+        {% else %}
+        <p>No hay discusiones</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

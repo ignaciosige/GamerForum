@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container my-2">
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{form_widget(form.texto, { 'attr': {'placeholder': 'Escriba aquí su mensaje...'} }) }}
+    </div>
+    {{form_widget(form.save) }} {{ form_end(form) }}
+</div>
+{% endblock %}

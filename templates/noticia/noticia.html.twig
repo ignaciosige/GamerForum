@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %} {% block body %}
+<div class="container mt-2">
+    <h1>{{noticia.titular}}</h1>
+    <img class="w-100" src="{{ asset('images/'~noticia.imagen) }}" alt="">
+    <p>{{noticia.contenido}}</p>
+</div>
+{% endblock %}
