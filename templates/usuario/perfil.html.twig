@@ -4,21 +4,111 @@
 <div class="container mt-2">
     <div class="row">
         <div class="col-12 col-md-2">
-            <img width="100px" height="300px" src="images/{% if usuario.fotoPerfil %}{{usuario.fotoPerfil}}{% else %}defecto.jpg{% endif %}" alt="">
+            <img width="300px" height="300px" src="{% if usuario.fotoPerfil %}{{asset('images/'~usuario.fotoPerfil)}}{% else %}{{asset('images/defecto.jpg')}}{% endif %}" alt="">
+            {% if app.user == usuario or is_granted('ROLE_ADMIN') %}
+                <a href="#" id="botonMostrar" class="mt-2 d-block" onclick="mostrarFormulario()">Editar Foto Perfil</a>
+                <div id="form" class="mt-2 d-none">
+                    {{ form_start(form) }}
+                    <div class="form-group">
+                        {{form_widget(form.fotoPerfil) }}
+                    </div>
+                    {{form_widget(form.save) }} 
+                    
+                    {{ form_end(form) }}
+                </div>
+            {% endif %}
         </div>
-        <div class="col-12 col-md-6"></div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-8"></div>
+        <div class="col-12 col-md-2">
+            {% if app.user == usuario or is_granted('ROLE_ADMIN') %}
+            <a href="{{path('editarUsuario', {'id' : usuario.id})}}" class="mt-2 d-block"><small>Editar Perfil</small></a>
+            <a href="" data-toggle="modal" data-target="#confirmarBorrarCuenta"><small>Borrar mi cuenta</small></a>
 
+            <div class="modal fade" id="confirmarBorrarCuenta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-exclamation-circle"></i>¡Atención!<i class="fas fa-exclamation-circle"></i></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea eliminar su cuenta?
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" data-dismiss="modal">Cancelar</a>
+                    <a class="btn btn-primary" href="{{path('editarUsuario', {'id' : usuario.id})}}" class="mt-2 d-block">Confirmar</a>
+                </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
         </div>
     </div>
     <div class="row">
         <div class="col-12 col-md-2">
             <h5>{{usuario.nombreUsuario}}</h5>
         </div>
-        <div class="col-12 col-md-6"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-2">
+            <h5>Cumpleaños: {{usuario.fechaNacimiento|date('d-m')}} <i class="fas fa-birthday-cake"></i></h5>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-4">
+            <h2>Juegos Jugados</h2>
+            {% for juego in juegos %}
+            {% if juego.estado == 'Jugado' %}
+            <div class="col-12">
+                <div class="fondo">
+                    <a href="{{path('juego', { id : juego.idJuego })}}" class="btn btn-primary"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
+                    <h5 id="nombreJuego{{juego.idJuego}}" class="card-title"></h5>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-12 col-md-4">
+            <h2>Juegos Jugando</h2>
+            {% for juego in juegos %}
+            {% if juego.estado == 'Jugando' %}
+            <div class="col-12">
+                <div class="fondo">
+                    <a href="{{path('juego', { id : juego.idJuego })}}" class="btn btn-primary"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
+                    <h5 id="nombreJuego{{juego.idJuego}}" class="card-title"></h5>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        
+        </div>
+        <div class="col-12 col-md-4">
+            <h2>Juegos Pendientes</h2>
+            {% for juego in juegos %}
+            {% if juego.estado == 'Pendiente' %}
+            <div class="col-12">
+                <div class="fondo">
+                    <a href="{{path('juego', { id : juego.idJuego })}}" class="btn btn-primary"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
+                    <h5 id="nombreJuego{{juego.idJuego}}" class="card-title"></h5>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
 
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset('js/scriptForm.js') }}"></script>
+    <script src="{{ asset('js/perfil.js') }}"></script>
+    <script>
+        {% for juego in juegos %}
+            getInfoJuego({{juego.idJuego}})
+        {% endfor %}
+    </script>
 {% endblock %}

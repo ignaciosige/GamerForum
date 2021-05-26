@@ -106,3 +106,28 @@ eliminarComentario:
         id: '\d+'
         idDiscusion: '\d+'
 
+# Manejo de Juegos
+
+juegos:
+  path: /juegos/{pagina}
+  controller: App\Controller\JuegoController::juegos
+  requirements:
+        pagina: '\d+'
+
+juego:
+  path: /juegos/detalles/{id}
+  controller: App\Controller\JuegoController::juego
+  requirements:
+        id: '\d+'
+
+checkJuego:
+  path: /juegos/check/{id}
+  controller: App\Controller\JuegoController::checkJuego
+  requirements:
+        id: '\d+'
+
+eliminarJuego:
+  path: /juegos/eliminar/{id}
+  controller: App\Controller\JuegoController::eliminarJuego
+  requirements:
+        id: '\d+'

@@ -2,16 +2,16 @@
 <div class="container my-2">
     <h1>{{discusion.titulo}}</h1>
     <p><small>Creado por {{discusion.creador.nombreUsuario}}</small></p>
-    <p class="border-bottom">{{discusion.texto}}</p>
+    <h3>{{discusion.texto}}</h3>
 
     {% for comentario in comentarios %}
-    <div class="border-top border-bottom p-2">
+    <div class="border-top border-bottom p-2 mt-3">
         <div class="row">
             <div class="col-2 border-right">
                 <div class="row">
                     <div class="col-8">
-                        <img width="100px" height="100px" src="{{asset('images/'~comentario.autor.fotoPerfil)}}" alt="">
-                        <small>{{comentario.autor.nombreUsuario}}</small>
+                        <img width="100px" height="100px" src="{% if comentario.autor.fotoPerfil %}{{asset('images/'~comentario.autor.fotoPerfil)}}{% else %}{{asset('images/defecto.jpg')}}{% endif %}" alt="">
+                        <a href="{{path('perfil', {'id' : discusion.creador.id})}}"><small>{{comentario.autor.nombreUsuario}}</small></a>
                         <small>{{comentario.fecha|date('d-m-Y')}}</small>
                     </div>
                 </div>
@@ -19,25 +19,28 @@
             <div class="col-8">
                 <p>{{comentario.texto}}</p>
             </div>
-            <div class="col-2">
                 {% if app.user == comentario.autor or is_granted('ROLE_ADMIN') %}
-                <div>
-                    <a href="{{path('eliminarComentario', {id:comentario.id,idDiscusion:discusion.id})}}"><small>Eliminar</small></a>
-                </div>
+            <div class="col-2 border-left">
                 <div>
                     <a href="{{path('editarComentario', {id:comentario.id,idDiscusion:discusion.id})}}"><small>Editar</small></a>
                 </div>
-                {% endif %}
+                <div>
+                    <a href="{{path('eliminarComentario', {id:comentario.id,idDiscusion:discusion.id})}}"><small>Eliminar</small></a>
+                </div>
             </div>
+                {% endif %}
         </div>
     </div>
     {% endfor %}
-
-    <p class="my-2">Deja tu comentario:</p>
-    {{ form_start(form) }}
-    <div class="form-group">
-        {{form_widget(form.texto, { 'attr': {'placeholder': 'Escriba aquí su mensaje...'} }) }}
+    <div class="container fixed-bottom formComentario">
+        <p class="my-2">Deja tu comentario:</p>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{form_widget(form.texto, { 'attr': {'placeholder': 'Escriba aquí su mensaje...'} }) }}
+        </div>
+        {{form_widget(form.save) }} 
+        {{ form_end(form) }}
     </div>
-    {{form_widget(form.save) }} {{ form_end(form) }}
+    
 </div>
 {% endblock %}

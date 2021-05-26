@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %}
+<div class="container my-2">
+    <div class="row">
+        {% for juego in juegos %}
+        <div class="col-12 col-sm-4">
+            <div class="fondo">
+                <a href="{{path('juego', { id : juego.id })}}" class="btn btn-primary"><img width="100%" height="250px" src="{{juego.background_image}}" class="card-img-top" alt="..."></a>
+                <h5 class="card-title">{{juego.name}}</h5>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-6 col-sm-2">
+            {% if pagina != 1 %}
+            <a href="{{ path('juegos', {pagina : pagina-1}) }}">Anterior</a>
+            {% endif %}
+        </div>
+        <div class="col-0 col-sm-8">
+
+        </div>
+        <div class="col-6 col-sm-2">
+            <a href="{{ path('juegos', {pagina : pagina+1}) }}">Siguiente</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

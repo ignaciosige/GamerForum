@@ -12,8 +12,8 @@
     </head>
     <body>
         {% block header %}
-        <nav class="navbar navbar-expand-lg navbar-light fondoBarras sticky-top">
-            <a class="navbar-brand" href="{{ path('index') }}"><img src="images/logo.png" width="180" height="60" alt="..."></a>
+        <nav id="header" class="navbar navbar-expand-lg navbar-light fondoBarras">
+            <a class="navbar-brand" href="{{ path('index') }}"><img src="{{asset('images/logo.png')}}" width="180" height="60" alt="..."></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -27,7 +27,7 @@
                         <a class="nav-link" href="{{ path('noticias') }}"><span id="navNoticias" class="noActivo">NOTICIAS</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href=""><span id="navJuegos" class="noActivo">JUEGOS</span></a>
+                        <a class="nav-link" href="{{ path('juegos', {pagina : 1}) }}"><span id="navJuegos" class="noActivo">JUEGOS</span></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -80,7 +80,7 @@
                                     <a href="#"><i class="fab fa-youtube"></i></a>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a class="btn btn-primary btn-block" href="#inicio" style="color: white;">Subir <i class="fas fa-caret-up d-inline"></i></a>
+                                    <a class="btn btn-primary btn-block" href="#header" style="color: white;">Subir <i class="fas fa-caret-up d-inline"></i></a>
                                 </div>
                             </div>
                         </div>

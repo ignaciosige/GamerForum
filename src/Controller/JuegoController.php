@@ -1,137 +1,90 @@
 <?php
 namespace App\Controller;
 
+use App\Service\ApiJuegos;
+use App\Entity\Juego;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Entity\Discusion;
-use App\Entity\Comentario;
-use App\Form\Type\DiscusionType;
 
 class JuegoController extends AbstractController
 {
-    private $entityManager;
-
-    public function foro()
+    public function juegos(ApiJuegos $apiJuegos, $pagina)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $listaJuegos = $apiJuegos->getJuegos($pagina);
 
-        $discusiones = $entityManager->getRepository(Discusion::class)->findAll();
-
-        return $this->render('discusion/foro.html.twig', ['discusiones' => $discusiones]);
+        return $this->render('juego/juegos.html.twig', ['juegos' => $listaJuegos, 'pagina' => $pagina]);
     }
 
-    public function discusion(Request $request, $id)
+    public function juego(ApiJuegos $apiJuegos, Request $request, $id)
     {
+        $juego = $apiJuegos->getJuego($id);
+
+        $estados=['Jugado', 'Pendiente', 'Jugando'];
+
         $entityManager = $this->getDoctrine()->getManager();
+        
+        $juegoUsuario = $entityManager->getRepository(Juego::class)->findOneBy(['usuario' => $this->getUser(),'idJuego' => $id]);
 
-        $discusion = $entityManager->getRepository(Discusion::class)->find($id);
+        if (!$juegoUsuario) {
+            $juegoUsuario = new Juego();
+        }
 
-        $comentario = new Comentario();
-
-        $form = $this->createFormBuilder($comentario)
-        ->add('texto', TextType::class)
+        $form = $this->createFormBuilder($juegoUsuario)
+        ->add('estado', ChoiceType::class, ['choices' => $estados, 'choice_label' => function($choice, $key, $value) {return $value; }])
         ->add('save', SubmitType::class,
-            array('label' => 'Comentar'))
+            array('label' => 'Guardar'))
         ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            $comentario = $form->getData();
+            $juegoUsuario = $form->getData();
 
-            $comentario->setAutor($this->getUser());
+            $juegoUsuario->setUsuario($this->getUser());
 
-            $comentario->setDiscusion($discusion);
+            $juegoUsuario->setIdJuego($id);
 
-            $comentario->setFecha( new \DateTime( 'now' ));
-
-            $entityManager->persist($comentario);
+            $entityManager->persist($juegoUsuario);
 
             $entityManager->flush();
 
-            return $this->redirectToRoute('discusion', ['id' => $id]);
+            return $this->redirectToRoute('juego', ['id' => $id]);
         }
 
-        return $this->render('discusion/discusion.html.twig', ['form' => $form->createView(), 'discusion' => $discusion]);
+        return $this->render('juego/juego.html.twig', ['juego' => $juego, 'id' => $id, 'form' => $form->createView()]);
     }
 
-    public function nuevaDiscusion(Request $request)
+    public function checkJuego($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
+        
+        $juegoUsuario = $entityManager->getRepository(Juego::class)->findOneBy(['usuario' => $this->getUser(),'idJuego' => $id]);
 
-        $discusion = new Discusion();
-
-        $form = $this->createForm(DiscusionType::class, $discusion);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $discusion = $form->getData();
-
-            $discusion->setCreador($this->getUser());
-            
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($discusion);
-
-            $entityManager->flush();
-
-            return $this->redirectToRoute('foro');
+        if (!$juegoUsuario) {
+            return new Response('NO');
         }
 
-        return $this->render('discusion/nuevaDiscusion.html.twig', ['form' => $form->createView()]);
+        return new Response('OK');
     }
 
-    public function eliminarDiscusion($id)
+    public function eliminarJuego($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
+        
+        $juegoUsuario = $entityManager->getRepository(Juego::class)->findOneBy(['usuario' => $this->getUser(),'idJuego' => $id]);
 
-        $discusion = $entityManager->getRepository(Discusion::class)->find($id);
-
-        if (!$discusion){
-            throw $this->createNotFoundException(
-                'No existe ninguna discusion con id '.$id
-            );
+        if (!$juegoUsuario) {
+            $juegoUsuario = new Juego();
         }
 
-        $entityManager->remove($discusion);
+        $entityManager->remove($juegoUsuario);
 
         $entityManager->flush();
 
-        return $this->redirectToRoute('foro');
-    }
-
-    public function editarDiscusion(Request $request, $id)
-    {
-        $discusion = $entityManager->getRepository(Discusion::class)->find($id);
-
-        if (!$discusion){
-            throw $this->createNotFoundException(
-                'No existe ninguna discusion con id '.$id
-            );
-        }
-
-        $form = $this->createForm(DiscusionType::class, $discusion);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $discusion = $form->getData();
-
-            $discusion->setCreador($this->getUser());
-            
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->flush();
-
-            return $this->redirectToRoute('foro');
-        }
-
-        return $this->render('discusion/nuevaDiscusion.html.twig', ['form' => $form->createView()]);
+        return $this->redirectToRoute('juego',['id' => $id]);
     }
 }

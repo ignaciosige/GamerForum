@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Discusion;
 use App\Entity\Comentario;
@@ -26,12 +26,12 @@ class DiscusionController extends AbstractController
 
         $discusion = $entityManager->getRepository(Discusion::class)->find($id);
 
-        $comentarios = $entityManager->getRepository(Comentario::class)->findAll();
+        $comentarios = $entityManager->getRepository(Comentario::class)->findBy(['discusion' => $id]);
 
         $comentario = new Comentario();
 
         $form = $this->createFormBuilder($comentario)
-        ->add('texto', TextType::class)
+        ->add('texto', TextareaType::class)
         ->add('save', SubmitType::class,
             array('label' => 'Comentar'))
         ->getForm();
@@ -111,6 +111,8 @@ class DiscusionController extends AbstractController
 
     public function editarDiscusion(Request $request, $id)
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        
         $discusion = $entityManager->getRepository(Discusion::class)->find($id);
 
         if (!$discusion){
@@ -128,8 +130,6 @@ class DiscusionController extends AbstractController
             $discusion = $form->getData();
 
             $discusion->setCreador($this->getUser());
-            
-            $entityManager = $this->getDoctrine()->getManager();
 
             $entityManager->flush();
 

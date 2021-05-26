@@ -1,11 +1,24 @@
-{% extends 'base.html.twig' %} 
-
-{% block body %}
+{% extends 'base.html.twig' %} {% block body %}
 <div class="container mt-2">
+    {% if app.user %}
     <a href="{{ path('nuevaDiscusion') }}">+ Crear nueva discusión</a>
-    <ul class="list-group-flush">
+    {% endif %}
+    <ul class="list-group-flush mt-2">
         {% for discusion in discusiones %}
-        <li class="list-group-item border-top border-bottom"><a href="{{ path('discusion', {id: discusion.id}) }}">{{discusion.titulo}}</a> - creado por: {{discusion.creador.nombreUsuario}}</li>
+        <li class="list-group-item border-top border-bottom fondo">
+            <div class="row">
+                <div class="col-12 col-sm-11">
+                    <a href="{{ path('discusion', {id: discusion.id}) }}">{{discusion.titulo}}</a> - creado por: <a href="{{path('perfil', {'id' : discusion.creador.id})}}">{{discusion.creador.nombreUsuario}}</a>
+                </div>
+                <div class="col-12 col-sm-1">
+                    {% if app.user == discusion.creador or is_granted('ROLE_ADMIN')%}
+                    <a href="{{ path('editarDiscusion', {id: discusion.id}) }}"><small>Editar</small></a>
+                    <a href="{{ path('eliminarDiscusion', {id: discusion.id}) }}"><small>Eliminar</small></a> 
+                    {% endif %}
+                </div>
+            </div>
+
+        </li>
         {% else %}
         <p>No hay discusiones</p>
         {% endfor %}

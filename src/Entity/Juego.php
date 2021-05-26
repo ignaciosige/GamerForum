@@ -18,19 +18,9 @@ class Juego
     private $id;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=255)
      */
-    private $jugado;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $jugando;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $pendiente;
+    private $estado;
 
     /**
      * @ORM\ManyToOne(targetEntity=Usuario::class, inversedBy="juegos")
@@ -48,38 +38,14 @@ class Juego
         return $this->id;
     }
 
-    public function getJugado(): ?bool
+    public function getEstado(): ?string
     {
-        return $this->jugado;
+        return $this->estado;
     }
 
-    public function setJugado(bool $jugado): self
+    public function setEstado(string $estado): self
     {
-        $this->jugado = $jugado;
-
-        return $this;
-    }
-
-    public function getJugando(): ?bool
-    {
-        return $this->jugando;
-    }
-
-    public function setJugando(bool $jugando): self
-    {
-        $this->jugando = $jugando;
-
-        return $this;
-    }
-
-    public function getPendiente(): ?bool
-    {
-        return $this->pendiente;
-    }
-
-    public function setPendiente(bool $pendiente): self
-    {
-        $this->pendiente = $pendiente;
+        $this->estado = $estado;
 
         return $this;
     }
