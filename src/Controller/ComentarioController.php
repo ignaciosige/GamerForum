@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Discusion;
 use App\Entity\Comentario;
@@ -43,7 +43,7 @@ class ComentarioController extends AbstractController
         }
 
         $form = $this->createFormBuilder($comentario)
-        ->add('texto', TextType::class)
+        ->add('texto', TextareaType::class)
         ->add('save', SubmitType::class,
             array('label' => 'Confirmar'))
         ->getForm();

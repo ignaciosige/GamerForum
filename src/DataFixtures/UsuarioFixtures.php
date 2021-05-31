@@ -22,6 +22,7 @@ class UsuarioFixtures extends Fixture
         $usuario = new Usuario();
         $usuario->setNombreUsuario("Laura Moreno");
         $usuario->setEmail("laury28@gmail.com");
+        $usuario->setFotoPerfil("defecto.jpg");
         $usuario->setFechaNacimiento( new \DateTime( 'now' ) );
         $usuario->setPassword($this->passwordEncoder->encodePassword(
             $usuario,
@@ -33,6 +34,7 @@ class UsuarioFixtures extends Fixture
         $usuario = new Usuario();
         $usuario->setNombreUsuario("Sylver1306");
         $usuario->setEmail("ignaciosilgen@gmail.com");
+        $usuario->setFotoPerfil("defecto.jpg");
         $usuario->setFechaNacimiento( new \DateTime( 'now' ) );
         $usuario->setPassword($this->passwordEncoder->encodePassword(
             $usuario,
