@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %} {% block body %}
 <div class="container my-2">
     <div class="row">
-        <div class="col-12 col-sm-5">
+        <div class="col-12 col-lg-5">
             <img width="400px" height="300px" src="{{juego.background_image}}" alt="...">
             <h1>{{juego.name}}</h1>
         </div>
-        <div class="col-12 col-sm-7">
+        <div class="col-12 col-lg-7">
             <div class="row my-2">
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-lg-4">
                     Puntuación :
                     <br>
                     <span style="font-size: 300%;">{{juego.rating}}</span>
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-lg-4">
                     Metacritic :
                     <br>
                     <span style="font-size: 300%;">{{juego.metacritic}}</span>
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-lg-4">
                     {% if app.user %}
                     <button id="botonMostrar" class="btn btn-primary mt-2 d-block" onclick="mostrarFormulario()">Añadir</button>
                     <div id="form" class="mt-2 d-none">
