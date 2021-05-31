@@ -12,7 +12,7 @@ function checkJuego() {
         var idJuego = url.substring(url.lastIndexOf('/') + 1);
         $.ajax({
             'type': 'GET',
-            'url': 'http://127.0.0.1:8000/juegos/check/' + idJuego,
+            'url': 'http://gamerforum.herokuapp.com:8000/juegos/check/' + idJuego,
             'success': (result) => {
                 if (result == 'OK') {
                     mostrarFormulario();
