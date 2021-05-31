@@ -31,8 +31,8 @@ class UsuarioFixtures extends Fixture
 
         // Usuario administrador
         $usuario = new Usuario();
-        $usuario->setNombreUsuario("Manuel Gómez");
-        $usuario->setEmail("manolo30@gmail.com");
+        $usuario->setNombreUsuario("Sylver1306");
+        $usuario->setEmail("ignaciosilgen@gmail.com");
         $usuario->setFechaNacimiento( new \DateTime( 'now' ) );
         $usuario->setPassword($this->passwordEncoder->encodePassword(
             $usuario,

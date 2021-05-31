@@ -3,21 +3,17 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use App\Entity\Mensaje;
 use App\Form\Type\MensajeType;
 
 class AppController extends AbstractController
 {
-    private $entityManager;
-
     public function index()
     {
         return $this->render('gamerforum/index.html.twig');
     }
 
-    public function contacto(MailerInterface $mailer, Request $request)
+    public function contacto( \Swift_Mailer $mailer, Request $request)
     {
 
         $mensaje = new Mensaje();
@@ -29,19 +25,13 @@ class AppController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $mensaje = $form->getData();
-            
-            $email = (new Email())
-            ->from($mensaje->getEmail())
-            ->to('gamerforumes@gmail.com')
-            //->cc('cc@example.com')
-            //->bcc('bcc@example.com')
-            //->replyTo('fabien@example.com')
-            //->priority(Email::PRIORITY_HIGH)
-            ->subject($mensaje->getAsunto())
-            ->text($mensaje->getMensaje());
+
+            $email = (new \Swift_Message($mensaje->getAsunto()))
+                    ->setFrom($mensaje->getEmail())
+                    ->setTo('gamerforumes@gmail.com')
+                    ->setBody($mensaje->getEmail().":\n\n".$mensaje->getTexto());
 
             $mailer->send($email);
-
 
         }
 

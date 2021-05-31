@@ -42,7 +42,7 @@ class Usuario implements UserInterface
     private $nombreUsuario;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $fechaNacimiento;
 

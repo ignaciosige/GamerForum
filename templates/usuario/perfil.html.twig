@@ -4,7 +4,7 @@
 <div class="container mt-2">
     <div class="row">
         <div class="col-12 col-md-2">
-            <img width="300px" height="300px" src="{% if usuario.fotoPerfil %}{{asset('images/'~usuario.fotoPerfil)}}{% else %}{{asset('images/defecto.jpg')}}{% endif %}" alt="">
+            <img width="300px" height="300px" src="{% if usuario.fotoPerfil %}{{asset('images/'~usuario.fotoPerfil)}}{% endif %}" alt="">
             {% if app.user == usuario or is_granted('ROLE_ADMIN') %}
                 <a href="#" id="botonMostrar" class="mt-2 d-block" onclick="mostrarFormulario()">Editar Foto Perfil</a>
                 <div id="form" class="mt-2 d-none">
@@ -63,7 +63,7 @@
             {% if juego.estado == 'Jugado' %}
             <div class="col-12">
                 <div class="fondo">
-                    <a href="{{path('juego', { id : juego.idJuego })}}" class="btn btn-primary"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
+                    <a href="{{path('juego', { id : juego.idJuego })}}"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
                     <h5 id="nombreJuego{{juego.idJuego}}" class="card-title"></h5>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             {% if juego.estado == 'Jugando' %}
             <div class="col-12">
                 <div class="fondo">
-                    <a href="{{path('juego', { id : juego.idJuego })}}" class="btn btn-primary"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
+                    <a href="{{path('juego', { id : juego.idJuego })}}"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
                     <h5 id="nombreJuego{{juego.idJuego}}" class="card-title"></h5>
                 </div>
             </div>
@@ -90,7 +90,7 @@
             {% if juego.estado == 'Pendiente' %}
             <div class="col-12">
                 <div class="fondo">
-                    <a href="{{path('juego', { id : juego.idJuego })}}" class="btn btn-primary"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
+                    <a href="{{path('juego', { id : juego.idJuego })}}"><img id="imagenJuego{{juego.idJuego}}" width="100%" height="250px" src="{{asset('images/cargando.gif')}}" class="card-img-top" alt="..."></a>
                     <h5 id="nombreJuego{{juego.idJuego}}" class="card-title"></h5>
                 </div>
             </div>

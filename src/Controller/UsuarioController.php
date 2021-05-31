@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Usuario;
 use App\Entity\Juego;
 use App\Form\Type\UsuarioType;
@@ -23,7 +24,7 @@ class UsuarioController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $usuarios = $entityManager->getRepository(Noticia::class)->findAll();
+        $usuarios = $entityManager->getRepository(Usuario::class)->findAll();
 
         return $this->render('usuario/usuarios.html.twig', ['usuarios' => $usuarios]);
     }
@@ -91,6 +92,8 @@ class UsuarioController extends AbstractController
                 $usuario,
                 $usuario->getPassword()
             ));
+
+            $usuario->setFotoPerfil('defecto.jpg');
             
             $entityManager = $this->getDoctrine()->getManager();
 
@@ -137,7 +140,7 @@ class UsuarioController extends AbstractController
         return $this->render('usuario/registro.html.twig', ['form' => $form->createView()]);
     }
 
-    public function eliminarUsuario(Request $request, $id)
+    public function eliminarUsuario($id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -154,5 +157,31 @@ class UsuarioController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('index');
+    }
+
+    public function checkUsuarioNombre($nombreUsuario)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $usuario = $entityManager->getRepository(Usuario::class)->findBy(['nombreUsuario' => $nombreUsuario]);
+
+        if ($usuario) {
+            return new Response('KO');
+        }
+
+        return new Response('OK');
+    }
+
+    public function checkUsuarioEmail($email)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $usuario = $entityManager->getRepository(Usuario::class)->findBy(['email' => $email]);
+
+        if ($usuario) {
+            return new Response('KO');
+        }
+
+        return new Response('OK');
     }
 }

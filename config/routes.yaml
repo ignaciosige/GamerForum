@@ -90,6 +90,14 @@ eliminarUsuario:
   requirements:
         id: '\d+'
 
+checkUsuarioNombre:
+  path: /usuarios/check/nombre/{nombreUsuario}
+  controller: App\Controller\UsuarioController::checkUsuarioNombre
+
+checkUsuarioEmail:
+  path: /usuarios/check/email/{email}
+  controller: App\Controller\UsuarioController::checkUsuarioEmail
+
 # Manejo de Comentarios
 
 editarComentario:

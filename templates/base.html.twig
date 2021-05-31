@@ -39,6 +39,9 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item" href="{{ path('perfil', {id: app.user.id}) }}">Perfil</a>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('usuarios')}}">Usuarios</a>
+                                {% endif %}
                                 <a class="dropdown-item" href="{{ path('app_logout') }}">Cerrar Sesión</a>
                             </div>
                         </div>

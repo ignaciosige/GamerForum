@@ -1,7 +1,20 @@
-{% extends 'base.html.twig' %} 
+{% extends 'base.html.twig' %} {% block body %}
+<div class="container mt-2">
+    <ul class="list-group-flush mt-2">
+        {% for usuario in usuarios %}
+        <li class="list-group-item border-top border-bottom fondo">
+            <div class="row">
+                <div class="col-12 col-sm-11"><img width="100px" height="100px" src="{% if usuario.fotoPerfil %}{{asset('images/'~usuario.fotoPerfil)}}{% endif %}" alt="">
+                    <a href="{{ path('perfil', {id: usuario.id}) }}">{{usuario.nombreUsuario}}</a>
+                </div>
+                <div class="col-12 col-sm-1">
+                    <a href="{{ path('editarUsuario', {id: usuario.id}) }}"><small>Editar</small></a>
+                    <a href="{{ path('eliminarUsuario', {id: usuario.id}) }}"><small>Eliminar</small></a> 
+                </div>
+            </div>
 
-{% block body %}
-<div class="container">
-
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
