@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-    if (/^http:\/\/127\.0\.0\.1:8000\/discusiones.*/.test(window.location.href)) {
+    if (/^http:\/\/gamerforum\.herokuapp\.com:8000\/discusiones.*/.test(window.location.href)) {
         $('#navForo').removeClass('noActivo');
         $('#navNoticias').removeClass('activo');
         $('#navJuegos').removeClass('activo');
@@ -9,7 +9,7 @@ $(document).ready(() => {
         $('#navJuegos').addClass('noActivo');
     }
 
-    if (/^http:\/\/127\.0\.0\.1:8000\/noticias.*/.test(window.location.href)) {
+    if (/^http:\/\/gamerforum\.herokuapp\.com:8000\/noticias.*/.test(window.location.href)) {
         $('#navForo').removeClass('activo');
         $('#navNoticias').removeClass('noActivo');
         $('#navJuegos').removeClass('activo');
@@ -18,7 +18,7 @@ $(document).ready(() => {
         $('#navJuegos').addClass('noActivo');
     }
 
-    if (/^http:\/\/127\.0\.0\.1:8000\/juegos.*/.test(window.location.href)) {
+    if (/^http:\/\/gamerforum\.herokuapp\.com:8000\/juegos.*/.test(window.location.href)) {
         $('#navForo').removeClass('activo');
         $('#navNoticias').removeClass('activo');
         $('#navJuegos').removeClass('noActivo');

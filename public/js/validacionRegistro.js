@@ -34,7 +34,7 @@ function validar() {
 
     $.ajax({
         'type': 'GET',
-        'url': 'http://127.0.0.1:8000/usuarios/check/email/' + $("#usuario_email").val(),
+        'url': 'http://gamerforum.herokuapp.com:8000/usuarios/check/email/' + $("#usuario_email").val(),
         'success': (result) => {
             if (result == 'KO') {
                 $('#alertMensajeError').addClass('d-block');
@@ -57,7 +57,7 @@ function validar() {
 
     $.ajax({
         'type': 'GET',
-        'url': 'http://127.0.0.1:8000/usuarios/check/nombre/' + $("#usuario_nombreUsuario").val(),
+        'url': 'http://gamerforum.herokuapp.com:8000/usuarios/check/nombre/' + $("#usuario_nombreUsuario").val(),
         'success': (result) => {
             if (result == 'KO') {
                 $('#alertMensajeError').addClass('d-block');
