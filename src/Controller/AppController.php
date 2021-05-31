@@ -13,7 +13,7 @@ class AppController extends AbstractController
         return $this->render('gamerforum/index.html.twig');
     }
 
-    public function contacto( \Swift_Mailer $mailer, Request $request)
+    public function contacto(Request $request)
     {
 
         $mensaje = new Mensaje();
@@ -26,15 +26,25 @@ class AppController extends AbstractController
             
             $mensaje = $form->getData();
 
-            $email = (new \Swift_Message($mensaje->getAsunto()))
-                    ->setFrom($mensaje->getEmail())
-                    ->setTo('gamerforumes@gmail.com')
-                    ->setBody($mensaje->getEmail().":\n\n".$mensaje->getTexto());
+            $entityManager = $this->getDoctrine()->getManager();
 
-            $mailer->send($email);
+            $entityManager->persist($mensaje);
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('index');
 
         }
 
         return $this->render('gamerforum/contacto.html.twig', ['form' => $form->createView()]);    
+    }
+
+    public function mensajes()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $mensajes = $entityManager->getRepository(Mensaje::class)->findAll();
+
+        return $this->render('mensaje/mensajes.html.twig', ['mensajes' => $mensajes]);
     }
 }

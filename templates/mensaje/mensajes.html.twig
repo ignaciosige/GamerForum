@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %} {% block body %}
+<div class="container my-2">
+    <h1>Mensajes</h1>
+
+    {% for mensaje in mensajes %}
+    <div class="border-top border-bottom p-2 mt-3">
+        <div class="row">
+            <div class="col-12">
+                <h4>{{mensaje.nombre}}</h4><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h5>{{mensaje.asunto}}</h5><br>
+            </div>
+        </div>
+        <div class="row ml-2">
+            <div class="col-12">
+                <p>{{mensaje.texto}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Teléfono: {{mensaje.telefono}}</p>
+                <p>Email: {{mensaje.email}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}
